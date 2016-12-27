@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Login page</title>
+<script type="text/javascript" src="jquery-1.12.4.js"> </script>
+<script type="text/javascript" src="bootstrap-3.3.6-dist/js/bootstrap.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+</head>
+<style>
+
+
+</style>
+<script>
+
+
+
+
+</script>
+<body ng-app="address-book-app">
+<img class="img-responsive" src="appbgk.jpg" alt="Chania">
+<div class="row" > WELCOME TO ADDRESS BOOK  </div>
+<div class="container">
+
+ <div id="contactsTable" ng-controller="contactcontroller">
+  	<h2>Contacts </h2>          
+  	<table class="table">
+  	  <thead>
+     	 <tr>
+       		 <th>Contact Name </th>
+       		 <th>Contact Number </th>
+       		 <th>Email ID </th>
+    	  </tr>
+   	 </thead>
+   	 <tbody>
+      	  <tr ng-repeat="contact in contacts">
+       		 <td>{{contact.contactName}}</td>
+     	 	 <td>{{contact.contactNumber}}</td>
+        	 <td>{{contact.emailId}}</td>
+      </tr>
+     
+    </tbody>
+  </table>
+  </div>
+</div>
+<script>
+var app = angular.module('address-book-app', []);
+app.controller('contactcontroller', function($scope, $http) {
+    $http.get("/getContacts")
+    .then(function (response) {$scope.contacts = response.data.contacts;});
+});
+</script>
+</body>
+</html>
