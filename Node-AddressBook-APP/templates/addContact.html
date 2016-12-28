@@ -1,0 +1,17 @@
+  <div id="addcontactheader" class="addContacttitle"><h3>Add Contact</h3></div>
+  <form class="form-inline">
+    <div class="form-group">
+      <label class="sr-only" for="contactName">Contact Name :</label>
+      <input type="text" ng-model="contactName" class="form-control" name="contactName" id="contactName" placeholder="Enter Contact Name">
+    </div>
+    <div class="form-group">
+      <label class="sr-only" for="contactNumber">Contact Number :</label>
+      <input type="text"  ng-model="contactNumber"   class="form-control" id="contactNumber" placeholder="Enter Contact Number">
+    </div>
+    <div class="form-group">
+      <label class="sr-only" for="emailId">Email ID :</label>
+      <input type="text"  ng-model="emailId" class="form-control" id="emailId" placeholder="Enter EMAIL ID ">
+    </div>
+    <button ng-click="addContact()" id="add" class="btn btn-primary"> ADD </button>
+  </form>
+  
