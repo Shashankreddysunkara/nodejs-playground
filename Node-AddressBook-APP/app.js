@@ -20,6 +20,8 @@ app.use(express.static(__dirname + '/lib'));
 //app.use(express.static(__dirname + '/js'));
 app.use(express.static(__dirname + '/css'));
 app.use(express.static(__dirname + '/images'));
+app.use(express.static(__dirname + '/templates'));
+//app.use(express.static(__dirname + '/views'));
 
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
@@ -30,6 +32,8 @@ app.get('/', routes.home);
 app.post('/login', routes.login);
 
 app.get('/getContacts', routes.getContacts);
+app.get('/getActiveUser', routes.getActiveUser);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
