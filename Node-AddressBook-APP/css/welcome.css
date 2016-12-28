@@ -1,0 +1,68 @@
+
+body {
+    background-image: url("appbgk.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.container-full{
+	margin: 0 auto;
+  width: 100%;
+}
+.contactsTable{
+	
+	color: cornsilk;
+}
+
+.title{
+	padding-left: 40%;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: sans-serif;
+    color: cornsilk;
+}
+.searchContacttitle{
+	font-size: 15x;
+    font-weight: 500;
+    font-family: sans-serif;
+    color: cornsilk;
+}
+.addContacttitle{
+	
+    font-size: 15x;
+    font-weight: 500;
+    font-family: sans-serif;
+    color: cornsilk;
+}
+.contactsTable>table>thead>tr>th{
+	text-align:center;
+}
+
+.loggeduser{
+	    padding: 0;
+    margin: 1.5% 0;
+     font-size: 15px;
+    font-weight: 500;
+      font-family: sans-serif;
+    padding-bottom: 2.5%;
+}
+
+.contactsTable>table>tbody>tr>td{
+	text-align:center;
+}
+.paddingTop{
+	padding-top: 10px;
+}
+
+#navig>li a:hover{
+	    color: #fff;
+    background-color: #337ab7;
+}
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 15px 52px;
+     font-size: 16px;
+    font-weight: 500;
+    font-family: sans-serif;
+    color: cornsilk;
