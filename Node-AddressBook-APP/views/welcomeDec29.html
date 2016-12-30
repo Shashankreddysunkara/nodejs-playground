@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Login page</title>
+<script type="text/javascript" src="jquery-1.12.4.js"> </script>
+<script type="text/javascript" src="bootstrap-3.3.6-dist/js/bootstrap.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+<link rel="stylesheet" type="text/css" href="welcome.css">
+
+</head>
+<style>
+
+
+</style>
+
+<body ng-app="address-book-app">
+<div class="container-full"  >
+	<div   ng-controller="appController">
+	<div class="row" >
+		<span  class="col-sm-10 page-header title"> WELCOME TO ADDRESS BOOK </span>
+		<span class="col-sm-2 page-header title loggeduser" ng-model="userName">Active User: {{userName}}</span>
+	 </div>
+	
+<div class="row">
+	<div class="col-sm-3">
+		<ul id="navig" class="nav nav-pills nav-stacked paddingTop">
+			 <li ><a href="#">Home</a></li>
+ 			 <li><a href="#/addContact">Add Contact</a></li>
+ 			 <li><a href="#/viewContact">View Contact</a></li> 			 		 
+  			 <li><a href="#/editContact">Edit Contact</a></li>
+  			 <li><a href="#/deleteContact">Delete Contact</a></li>
+		</ul>
+	</div>
+
+	     
+ 	<div id="contactsTable" class="col-sm-6 contactsTable">
+ 		<div ng-view></div> 
+  		<h2>Contacts </h2>
+  	 
+  		<table class="table">
+  	 	 <thead>
+     	 	<tr>
+     	 	 <th></th>
+     	 	 <th>S.No</th>
+       		 <th ng-click="orderByContactInfo('contactName')">Contact Name </th>
+       		 <th ng-click="orderByContactInfo('contactNumber')">Contact Number </th>
+       		 <th ng-click="orderByContactInfo('emailId')">Email ID </th>
+       		  <th> </th>
+    	  	</tr>
+   		 </thead>
+  	 	 <tbody>
+      	  <tr ng-repeat="contact in contacts | orderBy:orderByContact ">
+      	 	 <td><label><input type="checkbox" value="{{$index}}"></label></td>
+      	     <td>{{$index+1}} </td>
+       		 <td>{{contact.contactName}}</td>
+     	 	 <td>{{contact.contactNumber}}</td>
+        	 <td>{{contact.emailId}}</td>
+        	 <td><a ng-click="deleteContact(contact)">
+         		 <span class="glyphicon glyphicon-remove"></span>
+       			 </a>
+       		</td>
+     	 </tr>
+     
+    	  </tbody>
+ 		 </table>
+ 	 </div>
+  </div>
+  </div>
+</div>
+<script>
+
+	
+
+var app = angular.module('address-book-app', ["ngRoute"]);
+app.config(function($routeProvider) {
+	  $routeProvider
+	  .when("/addContact", {
+	    templateUrl : "addContact.html"
+	  })
+	  .when("/viewContact", {
+	    templateUrl : "searchContact.html",
+	    controller: "appController"
+	  })
+	  .when("/editContact", {
+	    templateUrl : "editContact.html"
+	  })	 
+	  .when("/deleteContact", {
+	    templateUrl : "deleteContact.html"
+	  });
+	});
+	
+	app.service('userData',function(){
+		var activeUser;
+
+		this.getActiveUser = function() {
+			console.log("getActiveUser is called");
+			
+	 	  	return activeUser;
+		}
+		
+		this.setActiveUser= function(user){
+			console.log("setActiveUser is called");
+			activeUser=user;
+		}
+
+		
+	});
+	app.filter('contactSearchFilter', function () {
+	    return function (items, search) {
+	    	if(search === undefined || search == null){
+	    		return items;
+	    	}
+	        var result = [];
+	        
+	        angular.forEach(items, function (value, key) {
+	        	if( value.contactName.startsWith(search)  || value.contactNumber.toString().startsWith(search)  || value.contactName === search || value.contactNumber == search || value.emailId === search){
+	           		console.log("match found ");
+	        		result.push(value);
+	        	}
+	        });
+	        return result;
+
+	    }
+	});
+	app.controller('appController', function($scope, $http,$filter,userData) {
+   	 $http.get("/getContacts")
+   	 .then(function (response) {
+    	    		
+    		userData.setActiveUser(response.data);
+    		$scope.contacts =userData.getActiveUser().contacts;
+    		$scope.userName=userData.getActiveUser().name.toUpperCase();
+    		
+    		$scope.addContact=function(){
+	    	    	var contact={
+	    	    			contactName:$("#contactName").val(), 
+	    	    			contactNumber: $("#contactNumber").val(), 
+	    	    			emailId: $("#emailId").val()
+	    	    	}
+	    	    	var userContacts=userData.getActiveUser().contacts;
+	    	    	userContacts.push(contact);
+	    	    	userData.getActiveUser().contacts=userContacts;
+	    	    	userData.setActiveUser(userData.getActiveUser());
+	    	    	$scope.contacts=userContacts;
+	    	    	console.log("add contact is called");
+	    	    }
+    		
+    		$scope.selectedContact={};
+    		$scope.deleteContact=function(contact){
+    			console.log("delete contact is called");
+    			console.log("contact to delete "+contact.contactName);
+    	    	var userContacts=userData.getActiveUser().contacts;
+    	    	for(var i=0;i<userContacts.length;i++){
+    	    		
+    	    		if(userContacts[i].contactName === contact.contactName && userContacts[i].contactNumber === contact.contactNumber){
+    	    			userContacts.pop(contact);
+    	    		}
+    	    		
+    	    	}
+    	    	userData.getActiveUser().contacts=userContacts;
+    	    	userData.setActiveUser(userData.getActiveUser());
+    	    	$scope.contacts=userContacts;
+    	    	
+    	    }
+    		$scope.orderByContactInfo=function(contactInfo){
+    			$scope.orderByContact=contactInfo;
+    		}
+    	   /*  $scope.viewContact=function(){
+    	    	console.log("view contact is called");
+    	    	var userContacts=userData.getActiveUser().contacts;
+    	    	$scope.contacts=userContacts;
+    	    	 var matchedContacts=[];
+    	    	for(var i=0;i<userContacts.length;i++){
+    	    		
+    	    		if(userContacts[i].contactName === contact.contactName && userContacts[i].contactNumber === contact.contactNumber){
+    	    			//matchedContacts[]
+    	    		}
+    	    		
+    	    	} 
+    	    } */
+    	    $scope.$watch('search', function(val){
+    	    	console.log("value is "+val);
+    	    	        $scope.contacts = $filter('contactSearchFilter')(userData.getActiveUser().contacts, val);
+    	    	    });
+    
+   		 });
+	});
+
+	
+
+</script>
+</body>
+</html>
