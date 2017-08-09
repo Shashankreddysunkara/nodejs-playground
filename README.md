@@ -1,13 +1,13 @@
-# NodeJS-Scratches
+# Node JS- Scratches
 
 
-# This repository contains sample applications built using Nodejs and its various modules
+### This repository contains sample applications built using Nodejs and its various modules
 
 
 <b> List of Projects available </b>: 
 
 | Projects | Description |
-|------------------------|
+| ------------------------ |
 | location-app | Location Microservice app using TypeScript and NodeJs |
 |  Node-AddressBook-APP | A simple NodeJs Express project |
 
