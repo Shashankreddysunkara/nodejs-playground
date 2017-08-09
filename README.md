@@ -7,8 +7,11 @@
 <b> List of Projects available </b>: 
 
 | Projects | Description |
+
 | ------------------------ |
+
 | location-app | Location Microservice app using TypeScript and NodeJs |
+
 |  Node-AddressBook-APP | A simple NodeJs Express project |
 
 
