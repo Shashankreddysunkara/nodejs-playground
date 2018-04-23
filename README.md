@@ -1,4 +1,4 @@
-# Node JS- Scratches
+# node js - playground
 
 
 ### This repository contains sample applications built using Nodejs and its various modules
