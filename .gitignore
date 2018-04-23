@@ -94,3 +94,7 @@ typings/
 # Maven
 log/
 target/
+
+# Visual studio
+
+.vs/
