@@ -3,36 +3,42 @@ var Product=require("../model/Product");
 var HashMap = require('hashmap');
 //var rabbitmqconn=require('../messaging/rabbitmqconnection');
 var productrepository={
-		
+
 		productMap: null,
-		
+
 		initializeMap: function(){
 			console.log("Initializing the hash map");
 			this.productMap=new HashMap();
 		},
 
-				
+
 		saveProduct:function(product){
 			console.log("save product is called"+product);
 			this.productMap.set(product.productId,JSON.stringify(product));
-			
+
 		},
-		
+
 		getProduct:function(productId){
 			console.log("get product is called"+productId);
 			return this.productMap.get(productId);
+		},
+
+		getProducts: function(){
+
+			console.log("getting the products from product repository");
+			return null;
 		}
 };
 productrepository.initializeMap();
 
 var productservice={
-		
+
 		productRepo: null,
-		
+
 		setProductRepo: function(repo){
 			this.productRepo=repo;
 		},
-		
+
 		getProductRepo:function(){
 			return this.productRepo;
 		},
@@ -41,13 +47,18 @@ var productservice={
 			console.log("save product service is called"+product);
 			this.getProductRepo().saveProduct(product);
 		},
-		
+
 		getProduct:function(productId){
 			console.log("get product service is called"+productId);
 			return this.getProductRepo().getProduct(productId);
+		},
+
+		getProducts: function(){
+
+			 return this.getProductRepo().getProducts();
 		}
-		
-		
+
+
 };
 
 productservice.setProductRepo(productrepository);
