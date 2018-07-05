@@ -1,0 +1,8 @@
+---
+applications:
+- name: nodeJs app
+  memory: 1024M
+  host: nodeJs-cf
+  domain: cfapps.io
+  buildpack: https://github.com/cloudfoundry/nodejs-buildpack
+ 
