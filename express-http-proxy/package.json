@@ -23,7 +23,7 @@
     "cfenv": "^1.0.4",
     "connect-redis": "^3.2.0",
     "dateformat": "^1.0.12",
-    "express": "^4.14.0",
+    "express": "^4.17.3",
     "express-history-api-fallback": "^2.0.0",
     "express-xml-bodyparser": "^0.3.0",
     "helmet": "^3.5.0",
